@@ -28,6 +28,7 @@ import com.mncovid19project.OnlineEducationActivity;
 import com.mncovid19project.OrphanageSupportActivity;
 import com.mncovid19project.R;
 import com.mncovid19project.TestLabsActivity;
+import com.mncovid19project.TollNumbersActivity;
 import com.mncovid19project.TweetsActivity;
 import com.mncovid19project.VolunteersActivity;
 import com.google.firebase.database.DataSnapshot;
@@ -90,8 +91,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ImageViewHolde
                                 break;
 
                             case 2:
-                                Intent tollnumbersintent = new Intent(Intent.ACTION_VIEW);
-                                tollnumbersintent.setData(Uri.parse(jsons.getToll_numbers()));
+                                Intent tollnumbersintent = new Intent(mContext, TollNumbersActivity.class);
                                 mContext.startActivity(tollnumbersintent);
                                 break;
 
@@ -139,7 +139,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ImageViewHolde
                                 break;
 
                             case 12:
-                                Intent epassintent = new Intent(mContext, EpassActivity.class);
+                                Intent epassintent = new Intent(Intent.ACTION_VIEW);
                                 epassintent.putExtra("url", jsons.getEpass());
                                 mContext.startActivity(epassintent);
                                 break;
@@ -151,42 +151,19 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ImageViewHolde
                                 break;
 
                             case 14:
-                                Intent applicationtrackerintent = new Intent(Intent.ACTION_VIEW);
-                                applicationtrackerintent.setData(Uri.parse(jsons.getTracker()));
-                                mContext.startActivity(applicationtrackerintent);
-                                break;
-
-                            case 15:
-                                Intent migrantintent = new Intent(Intent.ACTION_VIEW);
-                                migrantintent.setData(Uri.parse(jsons.getMigrant()));
-                                mContext.startActivity(migrantintent);
-                                break;
-
-                            case 16:
                                 Intent educationintent = new Intent(mContext, OnlineEducationActivity.class);
-                                educationintent.putExtra("sb", jsons.getOd());
                                 educationintent.putExtra("cbse",jsons.getCbse());
                                 educationintent.putExtra("vc",jsons.getVocational_education());
                                 mContext.startActivity(educationintent);
                                 break;
 
-                            case 17:
+                            case 15:
                                 Intent intent20 = new Intent(Intent.ACTION_VIEW);
                                 intent20.setData(Uri.parse(jsons.getGo()));
                                 mContext.startActivity(intent20);
                                 break;
 
-                            case 18:
-                                Intent tweetintent = new Intent(mContext, TweetsActivity.class);
-                                tweetintent.putExtra("url", jsons.getTweets());
-                                mContext.startActivity(tweetintent);
-                                break;
-                            case 19:
-                                Intent videointent = new Intent(Intent.ACTION_VIEW);
-                                videointent.setData(Uri.parse(jsons.getVideos()));
-                                mContext.startActivity(videointent);
-                                break;
-                            case 20:
+                            case 16:
                                 Intent faqintent = new Intent(mContext, FAQsActivity.class);
                                 faqintent.putExtra("url", jsons.getFaq());
                                 mContext.startActivity(faqintent);

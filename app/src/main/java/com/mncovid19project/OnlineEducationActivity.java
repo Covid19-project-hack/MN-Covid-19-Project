@@ -19,13 +19,11 @@ public class OnlineEducationActivity extends AppCompatActivity {
     private GridView Grid_View;
 
     String[] web = {
-            "OD Stateboard",
             "CBSE",
             "Online Vocational Courses"
 
     };
     int[] imageId = {
-            R.drawable.book,
             R.drawable.book,
             R.drawable.book
 
@@ -39,7 +37,6 @@ public class OnlineEducationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_online_education);
 
         Intent intent = getIntent();
-        final String sb = intent.getStringExtra("sb");
         final String cbse = intent.getStringExtra("cbse");
         final String vc = intent.getStringExtra("vc");
 
@@ -63,17 +60,12 @@ public class OnlineEducationActivity extends AppCompatActivity {
                                     int position, long id) {
                 switch (position) {
                     case 0:
-                        Intent intent1 = new Intent(Intent.ACTION_VIEW);
-                        intent1.setData(Uri.parse(sb));
-                        startActivity(intent1);
-                        break;
-                    case 1:
                         Intent intent2 = new Intent(Intent.ACTION_VIEW);
                         intent2.setData(Uri.parse(cbse));
                         startActivity(intent2);
                         break;
 
-                    case 2:
+                    case 1:
                         Intent intent3 = new Intent(Intent.ACTION_VIEW);
                         intent3.setData(Uri.parse(vc));
                         startActivity(intent3);

@@ -1,55 +1,43 @@
 package com.mncovid19project;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.SearchView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.mncovid19project.Adapter.CoronaAdapter;
-import com.mncovid19project.Adapter.FAQAdapter;
-import com.mncovid19project.Models.Corona;
-import com.mncovid19project.Models.FAQ;
-import com.mncovid19project.Models.Persons;
-import com.google.firebase.database.DataSnapshot;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.mncovid19project.Adapter.TestLabsAdapter;
+import com.mncovid19project.Adapter.TollNumbersAdapter;
+import com.mncovid19project.Models.Test_Labs;
+import com.mncovid19project.Models.Toll_Numbers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class CoronaActivity extends AppCompatActivity {
+public class TollNumbersActivity extends AppCompatActivity{
 
     private RecyclerView mRecyclerView;
-    private List<Corona> viewItems;
+    private List<Toll_Numbers> viewItems;
 
-    private CoronaAdapter mAdapter;
+    private TollNumbersAdapter mAdapter;
     private RequestQueue mRequestQueue;
 
     private ImageView Back;
@@ -57,20 +45,17 @@ public class CoronaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_corona);
+        setContentView(R.layout.activity_toll_numbers);
 
         Intent intent = getIntent();
         String url = intent.getStringExtra("url");
 
-        Back= findViewById(R.id.toolbar_icon);
-        mRecyclerView = findViewById(R.id.corona_list);
+        Back = findViewById(R.id.toolbar_icon);
+        mRecyclerView = findViewById(R.id.toll_numbers_list);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         viewItems = new ArrayList<>();
-
-        mAdapter = new CoronaAdapter(CoronaActivity.this, viewItems);
-        mRecyclerView.setAdapter(mAdapter);
 
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,25 +66,31 @@ public class CoronaActivity extends AppCompatActivity {
 
         mRequestQueue = Volley.newRequestQueue(this);
         parseJSON(url);
+
+        mAdapter = new TollNumbersAdapter(TollNumbersActivity.this, viewItems);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void parseJSON(String url1) {
-
-        JsonObjectRequest request1 = new JsonObjectRequest(url1, null,
+        JsonObjectRequest request = new JsonObjectRequest("https://firebasestorage.googleapis.com/v0/b/mn-covid-19-project.appspot.com/o/toll_numbers.json?alt=media&token=cae15477-21cb-4f8f-9f7d-16d524cf8d11", null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONObject jsonObject = response.getJSONObject("Manipur").getJSONObject("districtData");
-                            Log.i("jsonresponse","hi");
-                            Iterator iterator = jsonObject.keys();
-                            while (iterator.hasNext()) {
-                                String key = (String) iterator.next();
-                                viewItems.add(new Corona(key, jsonObject.get(key).toString().split(",")[2].split(":")[1]));
+                            JSONArray jsonArray = response.getJSONArray("data");
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject hit = jsonArray.getJSONObject(i);
+                                String district = hit.getString("name");
+                                String phone_number = hit.getString("phone_number");
+
+                                viewItems.add(new Toll_Numbers(district, phone_number));
                             }
-                            mAdapter = new CoronaAdapter(CoronaActivity.this, viewItems);
+
+                            mAdapter = new TollNumbersAdapter(TollNumbersActivity.this, viewItems);
                             mRecyclerView.setAdapter(mAdapter);
                             mAdapter.notifyDataSetChanged();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -111,8 +102,7 @@ public class CoronaActivity extends AppCompatActivity {
             }
         });
 
-        mRequestQueue.add(request1);
-
+        mRequestQueue.add(request);
     }
 
 }

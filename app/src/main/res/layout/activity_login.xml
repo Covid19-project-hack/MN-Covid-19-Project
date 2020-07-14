@@ -36,7 +36,7 @@
                 android:layout_below="@id/login_text"
                 android:fontFamily="@font/nunito"
                 android:gravity="center"
-                android:text="OD-COVID-19 Project will send a OTP to verify your Mobile Number."
+                android:text="MN-COVID-19 Project will send a OTP to verify your Mobile Number."
                 android:textColor="@color/colorBlack" />
 
 

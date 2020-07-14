@@ -46,8 +46,8 @@ public class HealthCareListAdapter extends RecyclerView.Adapter<HealthCareListAd
 
         final HealthCareList persons = mHealthCareList.get(position);
 
-        holder.District.setText(persons.getDistrict());
-        holder.Hospital.setText(persons.getName());
+        holder.Beds.setText(persons.getBeds()+" beds");
+        holder.Hospital.setText(persons.getHospital());
 
     }
 
@@ -68,8 +68,8 @@ public class HealthCareListAdapter extends RecyclerView.Adapter<HealthCareListAd
                     List<HealthCareList> filteredList = new ArrayList<>();
                     for (HealthCareList row : mDefaultHealthCareList) {
 
-                        if (row.getDistrict().toLowerCase().contains(charString) ||
-                                row.getName().toLowerCase().contains(charSequence) ||
+                        if (row.getBeds().toLowerCase().contains(charString) ||
+                                row.getHospital().toLowerCase().contains(charSequence) ||
                                 row.getType().toLowerCase().contains(charSequence)
                         ) {
                             filteredList.add(row);
@@ -95,12 +95,12 @@ public class HealthCareListAdapter extends RecyclerView.Adapter<HealthCareListAd
 
     public class ImageViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView District, Hospital;
+        private TextView Beds, Hospital;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
 
-            District = itemView.findViewById(R.id.district);
+            Beds = itemView.findViewById(R.id.district);
             Hospital = itemView.findViewById(R.id.hospital);
 
         }

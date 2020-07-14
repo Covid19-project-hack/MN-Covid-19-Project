@@ -2,15 +2,15 @@ package com.mncovid19project.Models;
 
 public class HealthCareList {
 
-    String sno, district, name, type;
+    String sno, beds, hospital, type;
 
     public HealthCareList() {
     }
 
-    public HealthCareList(String sno, String district, String name, String type) {
+    public HealthCareList(String sno, String beds, String hospital, String type) {
         this.sno = sno;
-        this.district = district;
-        this.name = name;
+        this.beds = beds;
+        this.hospital = hospital;
         this.type = type;
     }
 
@@ -22,20 +22,20 @@ public class HealthCareList {
         this.sno = sno;
     }
 
-    public String getDistrict() {
-        return district;
+    public String getBeds() {
+        return beds;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
+    public void setBeds(String beds) {
+        this.beds = beds;
     }
 
-    public String getName() {
-        return name;
+    public String getHospital() {
+        return hospital;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setHospital(String hospital) {
+        this.hospital = hospital;
     }
 
     public String getType() {
